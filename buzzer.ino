@@ -8,6 +8,8 @@ void setup() {
 }
 
 void loop() {
+  // Change loop for final product
+  
   // Buzzer ON
   ledcWrite(buzzerPin, 128); // 50% duty cycle
   delay(1000);
