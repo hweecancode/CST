@@ -1,0 +1,20 @@
+.pio
+
+.vscode/
+
+# Build artifacts
+build/
+*.hex
+*.elf
+*.bin
+
+# OS files
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Thumbs.db
+
+# Project-specific temporary files
+*.pyc
+*.tmp
+node_modules/
