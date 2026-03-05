@@ -6,6 +6,8 @@
 #include <Arduino.h>
 
 int timer_length = 0;
+int brightness = 0;
+bool timer_running = false;
 
 // put function declarations here:
 
@@ -14,18 +16,26 @@ void setup() {
   delay(1000);
   buttons_init();
   distance_init();
+  lcd_init();
 
 
 }
 
 void loop() {
+  timer_length = 0;
+
+  Serial.print("[MAIN] Printing start up \n");
+  lcd_print_startup();
+
   float dist = get_distance();
 
-  if(dist > 2.25 && dist < 3.25) {
-    update_timer(&timer_length);
+  if(dist <= 5.0) {
+    buttons_update_system(&timer_length, &brightness);
+
+  } else if(timer_length >= 1 && dist < 5.0 ) {
+
   }
-  
-  delay(250);
-  Serial.printf("%f\n", get_distance());
+
+
 }
 

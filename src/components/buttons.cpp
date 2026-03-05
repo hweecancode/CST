@@ -11,7 +11,7 @@ void buttons_init() {
     Serial.println("Buttons initialized.");
 }
 
-void update_timer(int* timer_len) {
+void buttons_update_system(int* timer_len, int* brightness) {
     // create an 8 bit bus for buttons 
     uint8_t button_bus =
         (!digitalRead(PIN_BUTTON_K1) << 0) |
@@ -40,9 +40,16 @@ void update_timer(int* timer_len) {
         *timer_len += 1;
         Serial.printf("Button 3: Increment. Total: %d\n", *timer_len);
     }
-    else if (button_bus == 0b1000 && *timer_len > 0) {
-        *timer_len -= 1;
-        Serial.printf("Button 4: Decrement. Total: %d\n", *timer_len);
+    else if (button_bus == 0b1000) {
+
+        if(*brightness >= 2) {
+            *brightness = 0;
+            Serial.printf("Button 4: brightness reset to min\n");
+            
+        } else {
+            *brightness += 1;    
+            Serial.printf("Button 4: Increasing brightness to %d\n", *brightness);
+        }
     }
 
     delay(250); 
