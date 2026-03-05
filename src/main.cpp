@@ -14,6 +14,7 @@ void setup() {
   delay(1000);
   buttons_init();
   distance_init();
+  buzzer_init();
 
 
 }
