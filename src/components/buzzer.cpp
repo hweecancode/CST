@@ -4,10 +4,9 @@
 void buzzer_init() {
     // Initialize
         pinMode(PIN_BUZZER, INPUT_PULLUP);
-        const int freq = 440;       // 440Hz
-        const int resolution = 8;   // 8-bit PWM (0-255)
     // Attach PWM directly to the pin
-    ledcAttachPin(PIN_BUZZER, freq);
+    ledcAttachPin(PIN_BUZZER, BUZZER_FREQ);
+    ledcSetup(0, BUZZER_FREQ, BUZZER_RESOLUTION);
 }
 
 void buzzer_on() {
