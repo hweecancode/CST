@@ -43,9 +43,9 @@ void lcd_print_startup() {
     
     lcd.clear();
     lcd.setCursor(0,0);
-    lcd.print("Select countdown:");
+    lcd.print("Pick time then");
     lcd.setCursor(0,1);
-    lcd.print("1)10m 2)5m 3)+1m");
+    lcd.print("put phone down");
     delay(5000);
     lcd.clear();
 }

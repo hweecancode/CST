@@ -15,4 +15,6 @@ void lcd_update_screen(int mins, int secs);
 
 void lcd_set_brightness(int level);
 
+void lcd_show_timeup();
+
 #endif
