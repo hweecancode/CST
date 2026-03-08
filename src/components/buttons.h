@@ -7,6 +7,6 @@
 
 void buttons_init();
 
-void update_timer(int* timer_len);
+void buttons_update_system(int* timer_len, int* brightness);
 
 #endif
