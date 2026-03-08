@@ -27,5 +27,6 @@
 // Buzzer
 #define PIN_BUZZER 23
 #define BUZZER_FREQ 440
+#define BUZZER_RESOLUTION 8
 
 #endif
