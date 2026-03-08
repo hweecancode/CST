@@ -10,7 +10,7 @@
 #define PIN_LCD_D7 5
 
 // LCD backlight and brightness
-#define PIN_LCD_BACKLIGHT 4
+#define PIN_LCD_BACKLIGHT 2
 #define LCD_PWM_FREQ 5000
 #define LCD_PWM_RES 8
 

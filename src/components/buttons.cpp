@@ -1,5 +1,6 @@
 #include "buttons.h"
 #include "config.h"
+#include "lcd_display.h"
 
 void buttons_init() {
     // initialize button pins 
@@ -50,6 +51,7 @@ void buttons_update_system(int* timer_len, int* brightness) {
             *brightness += 1;    
             Serial.printf("Button 4: Increasing brightness to %d\n", *brightness);
         }
+        lcd_set_brightness(*brightness);
     }
 
     delay(250); 
