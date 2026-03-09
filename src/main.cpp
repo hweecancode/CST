@@ -47,12 +47,11 @@ void loop() {
         lcd_update_screen(remaining_sec / 60, remaining_sec % 60);
         timer_running = true;
         last_tick = current_tick;
-        // lcd_start();
       }
       
     }
   } else { // timer runnning
-
+    buzzer_off();
     // check if one second has passed
     if(current_tick - last_tick >= 1000) {
       last_tick += 1000;
@@ -79,28 +78,21 @@ void loop() {
     // sound buzzer if object not present
     if(dist > 4.5 && remaining_sec > 0) {
       Serial.print("Buzzer on\n");
-      // buzzer_on();
+      buzzer_on();
       lcd_place_object_back();
     }
-
 
     // time out
     if (remaining_sec <= 0) {
         lcd_show_timeout();
-        // buzzer_on();
+        buzzer_on();
         if (dist > 4.5) {
             timer_length = 0;
             timer_running = false;
+            buzzer_off();
         }
     }
   }
-
-  // while(timer_length <= 25) {
-  //   buttons_update_system(&timer_length, &brightness);
-  //   lcd_set_brightness(brightness);
-  //   lcd_update_screen(timer_length, 0);
-  // }
-
 
 }
 

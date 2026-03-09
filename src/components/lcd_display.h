@@ -21,7 +21,4 @@ void lcd_place_object_back();
 
 void lcd_show_timeout();
 
-void lcd_start();
-
-
 #endif

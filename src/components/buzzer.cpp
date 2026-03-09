@@ -1,21 +1,22 @@
 #include "buzzer.h"
 #include "config.h"
 
+#define BUZZER_CHANNEL 1
+
 void buzzer_init() {
     // Initialize
-        pinMode(PIN_BUZZER, INPUT_PULLUP);
+        // pinMode(PIN_BUZZER, INPUT_PULLUP);
     // Attach PWM directly to the pin
-    ledcAttachPin(PIN_BUZZER, BUZZER_FREQ);
-    ledcSetup(0, BUZZER_FREQ, BUZZER_RESOLUTION);
+    ledcSetup(BUZZER_CHANNEL, BUZZER_FREQ, BUZZER_RESOLUTION);
+    ledcAttachPin(PIN_BUZZER, BUZZER_CHANNEL);
+
 }
 
 void buzzer_on() {
     // Buzzer ON
-    ledcWrite(PIN_BUZZER, 128);
-    delay(500); // Buzz for 500ms
+    ledcWrite(BUZZER_CHANNEL, 128);
+}
 
-    // Buzzer OFF
-    ledcWrite(PIN_BUZZER, 0);
-    delay(500); // Pause for 500ms
-
+void buzzer_off() {
+    ledcWrite(BUZZER_CHANNEL, 0);
 }

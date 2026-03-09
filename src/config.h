@@ -25,7 +25,7 @@
 #define PIN_BUTTON_K4 26
 
 // Buzzer
-#define PIN_BUZZER 23
+#define PIN_BUZZER 16
 #define BUZZER_FREQ 440
 #define BUZZER_RESOLUTION 8
 
