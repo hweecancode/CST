@@ -18,7 +18,7 @@ float get_distance() {
     digitalWrite(PIN_ULTRASONIC_TRIG, LOW);
 
     
-    long duration = pulseIn(PIN_ULTRASONIC_ECHO, HIGH);
+    long duration = pulseIn(PIN_ULTRASONIC_ECHO, HIGH, 60000);
 
     // datasheet equation: duration * speed of sound (0.0343 cm/us) / 2 
     float distance = (duration * 0.0343) / 2.0;

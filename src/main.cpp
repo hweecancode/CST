@@ -10,6 +10,8 @@ int remaining_sec = 0;
 bool timer_running = false;
 int brightness = 0;
 unsigned long last_tick = 0;
+unsigned long last_dist_sample = 0;
+int dist = 0;
 
 // put function declarations here:
 
@@ -29,7 +31,11 @@ void setup() {
 }
 
 void loop() {
-  float dist = get_distance();
+
+  if(millis() - last_dist_sample > 100) {
+    dist = get_distance();
+    last_dist_sample = millis();
+}
   Serial.printf("[MAIN] Distance: %f\n", dist);
   unsigned long current_tick = millis();
 
@@ -38,7 +44,7 @@ void loop() {
       lcd_place_object();
     } else {
       Serial.printf("Scanning button inputs\n");
-      buttons_update_system(&timer_length, &brightness);
+      buttons_update_system(&timer_length, &brightness , timer_running);
       lcd_update_screen(remaining_sec / 60, remaining_sec % 60);
 
       if(timer_length > 0) {
@@ -51,8 +57,21 @@ void loop() {
       
     }
   } else { // timer runnning
-    buzzer_off();
-    // check if one second has passed
+
+    if(dist < 4.5) {
+      int old_timer_length = timer_length;
+
+      buttons_update_system(&timer_length, &brightness, timer_running);
+
+      if(timer_length > old_timer_length) {
+        remaining_sec += (timer_length - old_timer_length) * 60;
+
+        lcd_update_screen(remaining_sec / 60, remaining_sec % 60);
+        Serial.printf("Added 1 minute %d", remaining_sec);
+      }
+    }
+    
+     // check if one second has passed
     if(current_tick - last_tick >= 1000) {
       last_tick += 1000;
 
@@ -63,35 +82,50 @@ void loop() {
       }
     }
 
-    if(dist < 4.5) {
-      int dummy = timer_length;
-      
-      buttons_update_system(&timer_length, &brightness);
-      lcd_set_brightness(brightness);
+    if (remaining_sec <= 0) {
 
-      if(timer_length - dummy > 0 && timer_length - dummy < 4) {
-        remaining_sec += (timer_length - dummy) * 60;
-        lcd_update_screen(remaining_sec / 60, remaining_sec % 60);
+    lcd_show_timeout();
+    buzzer_on();
+
+    if (dist > 4.5) {
+        timer_length = 0;
+        timer_running = false;
+        buzzer_off();
+    }
+
+    }
+    else {
+
+    // object removed warning
+    if(dist > 4.5) {
+        Serial.print("Buzzer on\n");
+        buzzer_on();
+        lcd_place_object_back();
+
+    } else {
+          buzzer_off();
       }
     }
-    
-    // sound buzzer if object not present
-    if(dist > 4.5 && remaining_sec > 0) {
-      Serial.print("Buzzer on\n");
-      buzzer_on();
-      lcd_place_object_back();
-    }
 
-    // time out
-    if (remaining_sec <= 0) {
-        lcd_show_timeout();
-        buzzer_on();
-        if (dist > 4.5) {
-            timer_length = 0;
-            timer_running = false;
-            buzzer_off();
-        }
-    }
+  //   // sound buzzer if object not present
+  //   if(dist > 4.5 && remaining_sec > 0) {
+  //     Serial.print("Buzzer on\n");
+  //     buzzer_on();
+  //     lcd_place_object_back();
+  //   } else {
+  //     buzzer_off();
+  //   }
+
+  //   // time out
+  //   if (remaining_sec <= 0) {
+  //       lcd_show_timeout();
+  //       buzzer_on();
+  //       if (dist > 4.5) {
+  //           timer_length = 0;
+  //           timer_running = false;
+  //           buzzer_off();
+  //       }
+  //   }
   }
 
 }

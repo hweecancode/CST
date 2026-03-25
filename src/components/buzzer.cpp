@@ -1,7 +1,7 @@
 #include "buzzer.h"
 #include "config.h"
 
-#define BUZZER_CHANNEL 1
+#define BUZZER_CHANNEL 5
 
 void buzzer_init() {
     // Initialize
