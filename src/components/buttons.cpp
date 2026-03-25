@@ -5,7 +5,7 @@
 static unsigned long last_press_time[4] = {0, 0, 0, 0};
 // active low buttons
 static bool last_state[4] = {true, true, true, true}; 
-static const unsigned long DEBOUNCE_MS = 200;
+static const unsigned long DEBOUNCE_MS = 100;
 
 
 void buttons_init() {
@@ -51,7 +51,6 @@ void buttons_update_system(int* timer_len, int* brightness, bool timer_running) 
     // check if more than one button is pressed
     if ((button_bus & (button_bus - 1)) != 0) {
         Serial.printf("Multiple buttons pressed, ignoring input\n");
-        delay(250);
         return;
     }
 
@@ -83,5 +82,5 @@ void buttons_update_system(int* timer_len, int* brightness, bool timer_running) 
         }
         lcd_set_brightness(*brightness);
     }
-    
+
 }
